@@ -31,10 +31,12 @@ class DefaultController extends Controller
         // the $content object contains as many Item instances as you have fresh articles in the feed
         $items = $feed->getItems();
 
-        echo "<pre>";
-        print_r($items);
-        echo "</pre>";
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', ['items' => $items]);
+    }
+
+    public function loginAction()
+    {
+        return $this->render('default/login.html.twig');
     }
 }

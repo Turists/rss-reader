@@ -6,6 +6,8 @@ security:
     providers:
         in_memory:
             memory: ~
+        my_custom_hwi_provider:
+            id: hwi_oauth.user.provider.entity
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -22,3 +24,18 @@ security:
 
             # form_login: ~
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+        secured_area:
+            pattern:    ^/
+            oauth:
+                resource_owners:
+                    facebook:      /login_facebook
+                    google:        /login_google
+                    twitter:       /login_twitter
+                login_path:        /
+                failure_path:      /login
+
+                oauth_user_provider:
+                    service: hwi_oauth.user.provider.entity
+
+            # Turn on anonymous for testings need.
+            anonymous: ~

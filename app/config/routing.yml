@@ -4,3 +4,16 @@ app:
 
 feedio:
     resource: "@DebrilRssAtomBundle/Resources/config/routing.xml"
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+facebook_login:
+    pattern: /login_facebook
+
+google_login:
+    pattern: /login_google
+
+twitter_login:
+    pattern: /login_twitter

@@ -7,3 +7,10 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    hwi_oauth.user.provider.entity:
+        class: CodeMe\TheBundle\Provider\Provider
+        arguments: [@session, @doctrine, @admin.checker, @request_stack]
+    admin.checker:
+        class: CodeMe\TheBundle\Provider\AdminChecker
+        arguments: [@doctrine, %admins%]

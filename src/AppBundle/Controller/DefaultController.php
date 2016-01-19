@@ -13,9 +13,28 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+
+
+        $reader = $this->container->get('debril.reader');
+
+
+
+        // this date is used to fetch only the latest items
+        $date = new \DateTime('2015-01-01');
+
+        // the feed you want to read
+        $url = 'http://feeds.feedburner.com/Apollolv-AllArticles?format=xml';
+
+        // now fetch its (fresh) content
+        $feed = $reader->getFeedContent($url, $date);
+
+        // the $content object contains as many Item instances as you have fresh articles in the feed
+        $items = $feed->getItems();
+
+        echo "<pre>";
+        print_r($items);
+        echo "</pre>";
         // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', array(
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        ));
+        return $this->render('default/index.html.twig', ['items' => $items]);
     }
 }

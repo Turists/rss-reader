@@ -7,14 +7,15 @@
                 <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
             </div>
 
-            <div id="status">
-                <p>
-                    <svg id="icon-status" width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z" fill="#759E1A"/></svg>
+            {% for item in items %}
+                <li>
+                    <h2>{{ item.title|e }}</h2>
+                    <div class="description">{{ item.description|e }}</div>
+                    <div style="font-size: 11px; color: blue">URL: {{ item.link|e }}</div>
+                    <div style="font-size: 11px; color: green;">Komentāri: {{ item.comment }}</div>
+                </li>
+            {% endfor %}
 
-                    Your application is ready to start working on it at:
-                    <code>{{ base_dir }}/</code>
-                </p>
-            </div>
 
             <div id="next">
                 <h2>What's next?</h2>
@@ -71,6 +72,11 @@
         @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
         @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
         .sf-toolbar { opacity: 0; -webkit-animation: fade-in 1s .2s forwards; animation: fade-in 1s .2s forwards;}
+    }
+
+    .description img {
+        float: left;
+        margin: 0 10px 10px 0;
     }
 </style>
 {% endblock %}

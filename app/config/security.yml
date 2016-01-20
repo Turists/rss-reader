@@ -29,8 +29,6 @@ security:
             oauth:
                 resource_owners:
                     facebook:      /login_facebook
-                    google:        /login_google
-                    twitter:       /login_twitter
                 login_path:        /
                 failure_path:      /login
 

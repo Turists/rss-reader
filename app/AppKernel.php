@@ -17,6 +17,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new Debril\RssAtomBundle\DebrilRssAtomBundle(),
+            new CodeMe\TheBundle\TheBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         );
 

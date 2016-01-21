@@ -79,3 +79,7 @@ hwi_oauth:
             #    display: popup #dialog is optimized for popup window
     http_client:
         verify_peer: false
+
+services:
+    hwi_oauth.user.provider.entity:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider

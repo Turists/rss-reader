@@ -26,6 +26,8 @@ parameters:
 
     twitter_client_id: KPjsDlCwuyLxU9kRkukHk5XpR
     twitter_client_secret: LMI30Jf6zm0HwytpXQp334oE18y1I0j5zJU3nlsuRgbHkmQltd
+    
+    feed_url: http://feeds.feedburner.com/Apollolv-AllArticles?format=xml
 
     admins:
         facebook:

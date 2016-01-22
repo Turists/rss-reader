@@ -24,7 +24,7 @@ class DefaultController extends Controller
 
             $date = new \DateTime('2016-01-01');
 
-            $url = 'http://feeds.feedburner.com/Apollolv-AllArticles?format=xml';
+            $url = $this->container->getParameter('feed_url');
 
             $feed = $reader->getFeedContent($url, $date);
 

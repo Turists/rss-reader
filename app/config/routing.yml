@@ -15,9 +15,6 @@ facebook_login:
 twitter_login:
     pattern: /login/twitter
 
-instagram_login:
-    pattern: /login/instagram
-
 logout:
     path:   /logout
 

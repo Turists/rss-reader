@@ -2,90 +2,111 @@
 
 {% block body %}
     <div id="wrapper">
-        <div class="container">
+    {% if app.user %}
+        <div class="header">
 
-            {% if app.user %}
+            <div class="container">
 
-                Hi, {{ app.user.username }}<br/>
-                <a href="{{ url('logout') }}">Logout</a>
+                <div class="user text-right">
+                    Welcome, {{ app.user.username }}
+                    <a href="{{ url('logout') }}"><span class="glyphicon glyphicon-log-out"></span></a>
+                </div>
 
+            </div>
+
+        </div>
+
+        <div class="body">
+            <div class="container">
                 {% if articles is defined %}
                     {% for article in articles %}
                         <div class="row">
-                            <div class="col-md-6 col-md-offset-3">
-                                <div class="date">{{ article.published }}</div>
+                            <div class="article col-md-6 col-md-offset-3">
 
-                                <a href="{{ article.link|e }}" target="_blank"><h2>{{ article.title|e }}</h2></a>
-                                <img src="{{ article.img }}" alt="{{ article.title|e }}"/>
-                                <div class="description">{{ article.description }}</div>
-                                <div style="font-size: 11px; color: green;">Autors: {{ article.author }}</div>
-                                <div style="font-size: 11px; color: green;">Komentāri: {{ article.comment }}</div>
+                                <div class="heading">
+                                    <h2>
+                                        <a href="{{ article.link|e }}" target="_blank">{{ article.title|e }}</a>
+                                        <a href="{{ article.comment }}" class="comments"><span class="glyphicon glyphicon-comment"></span></a>
+                                    </h2>
+                                </div>
+
+                                <div class="info clearfix">
+                                    <div class="date">{{ article.published }}</div>
+                                    <div class="author">Autors: {{ article.author }}</div>
+                                </div>
+
+                                <div class="description">
+                                    <a href="{{ article.link|e }}" target="_blank"><img src="{{ article.img }}" alt="{{ article.title|e }}"/></a>
+                                    <p>{{ article.description }}</p>
+                                </div>
+
                             </div>
 
                         </div>
                     {% endfor %}
 
-                    {{ knp_pagination_render(articles) }}
+                    <div class="row">
+                        <div class="pagination-wrap col-md-6 col-md-offset-3">
+                            {{ knp_pagination_render(articles) }}
+                        </div>
+
+                    </div>
                 {% endif %}
-
-            {% else %}
-
-            <div class="login-box">
-                <div class="row">
-                    <label>Log In with:</label>
-                    <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" id="facebook_login_button" class="btn fb">Login with Facebook</a>
-                    <a href="{{ url("hwi_oauth_service_redirect", {service: "twitter"}) }}" class="btn tw">Login with Twitter</a>
-                </div>
             </div>
-
-
-
-            <div id="fb-root"></div>
-            <script>
-                window.fbAsyncInit = function() {
-                    // init the FB JS SDK
-                    FB.init({
-                        appId      : '{{ facebook_client_id }}',                        // App ID from the app dashboard
-                        status     : true,                                 // Check Facebook Login status
-                        xfbml      : true                                  // Look for social plugins on the page
-                    }, {scope: 'email'});
-                };
-                // Load the SDK asynchronously
-                (function(d, s, id){
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) {return;}
-                    js = d.createElement(s); js.id = id;
-                    js.src = "//connect.facebook.net/en_US/all.js";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));
-                function fb_login() {
-                    FB.getLoginStatus(function(response) {
-                        if (response.status === 'connected') {
-                            // connected
-                            console.log('Already connected, redirect to login page to create token.');
-                            document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
-                        } else {
-                            // not_authorized
-                            FB.login(function(response) {
-                                if (response.authResponse) {
-                                    document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
-                                } else {
-                                    console.log('Cancelled.');
-                                }
-                            }, {scope: 'email'});
-                        }
-                    });
-                }
-                document.getElementById('facebook_login_button').onclick = function(e) {
-                    e.preventDefault();
-                    fb_login();
-                };
-            </script>
-
-            {% endif %}
-
         </div>
+    {% else %}
+
+        <div class="login-box">
+            <div class="row">
+                <label>Log In with:</label>
+                <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" id="facebook_login_button" class="btn fb">Login with Facebook</a>
+                <a href="{{ url("hwi_oauth_service_redirect", {service: "twitter"}) }}" class="btn tw">Login with Twitter</a>
+            </div>
+        </div>
+
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function() {
+                // init the FB JS SDK
+                FB.init({
+                    appId      : '{{ facebook_client_id }}',           // App ID from the app dashboard
+                    status     : true,                                 // Check Facebook Login status
+                    xfbml      : true                                  // Look for social plugins on the page
+                }, {scope: 'email'});
+            };
+            // Load the SDK asynchronously
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+            function fb_login() {
+                FB.getLoginStatus(function(response) {
+                    if (response.status === 'connected') {
+                        // connected
+                        document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                    } else {
+                        // not_authorized
+                        FB.login(function(response) {
+                            if (response.authResponse) {
+                                document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                            }
+                        }, {scope: 'email'});
+                    }
+                });
+            }
+            document.getElementById('facebook_login_button').onclick = function(e) {
+                e.preventDefault();
+                fb_login();
+            };
+        </script>
+
+    {% endif %}
+
     </div>
+
 {% endblock %}
 
 {% block stylesheets %}

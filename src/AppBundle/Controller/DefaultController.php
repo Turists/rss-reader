@@ -61,67 +61,9 @@ class DefaultController extends Controller
             $data = ['articles' => $pagination];
 
             $accessToken = $this->container->get('security.context')->getToken()->getAccessToken();
-
-            /*
-            $graphUrl = 'https://graph.facebook.com/v2.4/me?fields=id,name,picture,email&access_token='.$accessToken;
-            $userData = json_decode(file_get_contents($graphUrl));
-
-            $data['fb'] = $userData;
-            */
-
+            
         }
-
-
-
-
-
-
 
         return $this->render('default/index.html.twig', $data);
-    }
-
-
-    public function loadUserByOAuthUserResponse(UserResponseInterface $response) {
-
-        $email=$response->getEmail();// емэйл пользователя, например:totx@narod.ru
-        $name=$response->getRealName();// имя пользователя на стороне oAuth-сервера, например:Nikolay Lebedenko
-        $username=$response->getUsername();// уникальный ID пользователя на стороне oAuth-сервера, например:8d86a051742940e3
-        $response->getAccessToken();// токен (уникальный идентификатор) для авторизации, например:ZxC1/2+3 (более 255 символов)
-        $response->getExpiresIn();// предположительно: через какое время токен становится недействительным, например:3600 (секунд)
-        $response->getProfilePicture();// изображение профиля, может не быть, например:пусто
-        $response->getRefreshToken();// например:пусто
-        $response->getTokenSecret();// например:пусто
-
-        if(empty($email)){
-
-            throw new UsernameNotFoundException('Вы не идентифицированы т.к. не получен Email-адрес');
-
-        }
-
-        $user=$this->getUserByWindowsLive($username);// находим пользователя
-        /** @var $user \Acme\DemoBundle\Entity\User */
-
-        // если пользователя нет в базе данных - добавим его
-        if(!$user || !$user->getId()){
-
-            $user=new User();
-            $user->setName($name);
-            $user->setEmail($email);
-            $user->setWindowsLive($username);
-
-            $this->doctrine->getManager()->persist($user);
-            $this->doctrine->getManager()->flush();
-
-            $user_id=$user->getId();
-        }else{
-            $user_id=$user->getId();
-        }
-
-        if(!$user_id){
-            throw new UsernameNotFoundException('Возникла проблема добавления или определения пользователя');
-        }
-
-        return $this->loadUserByUsername($username);
-
     }
 }

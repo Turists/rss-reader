@@ -11,6 +11,3 @@ services:
     hwi_oauth.user.provider.entity:
         class: CodeMe\TheBundle\Provider\Provider
         arguments: [@session, @doctrine, @admin.checker, @request_stack]
-    admin.checker:
-        class: CodeMe\TheBundle\Provider\AdminChecker
-        arguments: [@doctrine, %admins%]

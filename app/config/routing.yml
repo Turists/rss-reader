@@ -12,6 +12,15 @@ hwi_oauth_redirect:
 facebook_login:
     pattern: /login/facebook
 
+twitter_login:
+    pattern: /login/twitter
+
+instagram_login:
+    pattern: /login/instagram
+
+logout:
+    path:   /logout
+
 the:
     resource: "@TheBundle/Resources/config/routing.yml"
     prefix:   /

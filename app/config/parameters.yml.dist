@@ -17,3 +17,23 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+
+    #Oauth2
+
+    facebook_client_id:     1668831680054386
+    facebook_client_secret: 2e128a0616a2a5868394f69b93d63f9d
+
+    twitter_client_id: KPjsDlCwuyLxU9kRkukHk5XpR
+    twitter_client_secret: LMI30Jf6zm0HwytpXQp334oE18y1I0j5zJU3nlsuRgbHkmQltd
+
+    instagram_client_id: 971b09ad578d4d78b5d0f2d604f06f38
+    instagram_client_secret: 6470dbbd60164c5b990c5daa4ad70b52
+
+    admins:
+        facebook:
+            - "myfacebook.id"
+
+twig:
+    globals:
+        facebook_client_id: %facebook_client_id%

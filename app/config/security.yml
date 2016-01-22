@@ -16,6 +16,7 @@ security:
             oauth:
                 resource_owners:
                     facebook:      /login/facebook
+                    twitter:       /login/twitter
                 login_path:        /
                 failure_path:      /
 
@@ -30,4 +31,3 @@ security:
 
         main:
             anonymous: ~
-

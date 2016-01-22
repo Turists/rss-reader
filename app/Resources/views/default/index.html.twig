@@ -2,70 +2,87 @@
 
 {% block body %}
     <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1><span>Welcome!</h1>
+        <div class="container">
+
+            {% if app.user %}
+
+                Hi, {{ app.user.username }}<br/>
+                <a href="{{ url('logout') }}">Logout</a>
+
+                {% if articles is defined %}
+                    {% for article in articles %}
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                <div class="date">{{ article.published }}</div>
+
+                                <a href="{{ article.link|e }}" target="_blank"><h2>{{ article.title|e }}</h2></a>
+                                <img src="{{ article.img }}" alt="{{ article.title|e }}"/>
+                                <div class="description">{{ article.description }}</div>
+                                <div style="font-size: 11px; color: green;">Autors: {{ article.author }}</div>
+                                <div style="font-size: 11px; color: green;">Komentāri: {{ article.comment }}</div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+
+                    {{ knp_pagination_render(articles) }}
+                {% endif %}
+
+            {% else %}
+
+            <div class="login-box">
+                <div class="row">
+                    <label>Log In with:</label>
+                    <a href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}" id="facebook_login_button" class="btn fb">Login with Facebook</a>
+                    <a href="{{ url("hwi_oauth_service_redirect", {service: "twitter"}) }}" class="btn tw">Login with Twitter</a>
+                </div>
             </div>
 
-            {% for item in items %}
-                <li>
-                    <h2>{{ item.title|e }}</h2>
-                    <div class="description">{{ item.description|e }}</div>
-                    <div style="font-size: 11px; color: blue">URL: {{ item.link|e }}</div>
-                    <div style="font-size: 11px; color: green;">Komentāri: {{ item.comment }}</div>
-                </li>
-            {% endfor %}
 
 
-            <div id="login_page">
-                <h1>Login</h1>
-                <a class="social-button facebook" id="facebook_login_button" href="{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}">Sign in with Facebook</a>
-                <a class="social-button twitter" href="{{ url("hwi_oauth_service_redirect", {service: "twitter"}) }}">Sign in with Twitter</a>
+            <div id="fb-root"></div>
+            <script>
+                window.fbAsyncInit = function() {
+                    // init the FB JS SDK
+                    FB.init({
+                        appId      : '{{ facebook_client_id }}',                        // App ID from the app dashboard
+                        status     : true,                                 // Check Facebook Login status
+                        xfbml      : true                                  // Look for social plugins on the page
+                    }, {scope: 'email'});
+                };
+                // Load the SDK asynchronously
+                (function(d, s, id){
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement(s); js.id = id;
+                    js.src = "//connect.facebook.net/en_US/all.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+                function fb_login() {
+                    FB.getLoginStatus(function(response) {
+                        if (response.status === 'connected') {
+                            // connected
+                            console.log('Already connected, redirect to login page to create token.');
+                            document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                        } else {
+                            // not_authorized
+                            FB.login(function(response) {
+                                if (response.authResponse) {
+                                    document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                                } else {
+                                    console.log('Cancelled.');
+                                }
+                            }, {scope: 'email'});
+                        }
+                    });
+                }
+                document.getElementById('facebook_login_button').onclick = function(e) {
+                    e.preventDefault();
+                    fb_login();
+                };
+            </script>
 
-
-                <div id="fb-root"></div>
-                <script>
-                    window.fbAsyncInit = function() {
-                        // init the FB JS SDK
-                        FB.init({
-                            appId      : '{{ facebook_client_id }}',                        // App ID from the app dashboard
-                            channelUrl : '{{ site }}channel.php',      // Channel file for x-domain comms
-                            status     : true,                                 // Check Facebook Login status
-                            xfbml      : true                                  // Look for social plugins on the page
-                        }, {scope: 'email'});
-                    };
-                    // Load the SDK asynchronously
-                    (function(d, s, id){
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) {return;}
-                        js = d.createElement(s); js.id = id;
-                        js.src = "//connect.facebook.net/en_US/all.js";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));
-                    function fb_login() {
-                        FB.getLoginStatus(function(response) {
-                            if (response.status === 'connected') {
-                                // connected
-                                console.log('Already connected, redirect to login page to create token.');
-                                document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
-                            } else {
-                                // not_authorized
-                                FB.login(function(response) {
-                                    if (response.authResponse) {
-                                        document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
-                                    } else {
-                                        console.log('Cancelled.');
-                                    }
-                                }, {scope: 'email'});
-                            }
-                        });
-                    }
-                    document.getElementById('facebook_login_button').onclick = function(e) {
-                        e.preventDefault();
-                        fb_login();
-                    };
-                </script>
-            </div>
+            {% endif %}
 
         </div>
     </div>

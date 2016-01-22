@@ -1,0 +1,12 @@
+{
+  "name": "rss-reader",
+  "description": "rss-reader",
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "web/components/"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1"
+  }
+}

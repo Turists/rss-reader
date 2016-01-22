@@ -1,3 +1,18 @@
+.header {
+    padding: 20px 0;
+}
+
+.header .user  a {
+    margin-left: 15px;
+    display: inline-block;
+}
+
+.body {
+    padding-top: 15px;
+    background-color: #f1f1f1;
+    box-shadow: inset 0px 2px 4px 0px rgba(0,0,0,0.16);
+}
+
 .login-box {
     margin: 15% auto;
     width: 300px;
@@ -52,10 +67,86 @@ label {
 
 .date {
     font-size: 11px;
-    margin-top: 20px;
+    float: left;
+}
+
+.author {
+    font-size: 11px;
+    float: right;
 }
 
 h2 {
+    margin: 0;
     font-size: 24px;
-    line-height: 29px
+    line-height: 29px;
+}
+
+.article {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 20px;
+    background-color: #fff;
+    border: solid 1px #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+}
+
+.heading a {
+    display: inline;
+    color: #4a4a4a;
+}
+
+.heading a.comments {
+    margin-left: 5px;
+    font-size: 13px;
+    color: #428bca;
+}
+
+.info {
+    margin: 5px 0;
+    color: #666;
+}
+
+.description img {
+    float: left;
+    margin: 5px 10px 7px 0;
+}
+
+.pagination-wrap {
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+
+.pagination span.current {
+    position: relative;
+    padding: 6px 12px;
+    margin-left: -1px;
+    display: inline-block;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination span a {
+    position: relative;
+    padding: 6px 12px;
+    margin-left: -1px;
+    display: inline-block;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination span a:hover {
+    text-decoration: none;
 }
